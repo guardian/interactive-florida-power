@@ -1,26 +1,15 @@
-import GoogleMap from '../components/interactive-google-map/index.html'
+var xhr = new XMLHttpRequest;
 
-const el = document.querySelector(".here")
+xhr.open('GET', process.env.PATH + '/resultsmap.html',false);
+xhr.send();
 
-console.log(el);
+var maphtml = xhr.responseText;
 
-const map = new GoogleMap({
-    target: el,
-    data: {
-        el: el,
-        config: {
-        	center: { lat: 30.7316306, lng: -94.9396368 },
-        	zoom: 3
-        },
-        markers: [{
-            "lat": 47.2655779,
-            "lng": -68.59197619999999,
-            "label": "A label"
-        }],
-        markerConfig: {
-        	markerSize: 20,
-        	infoWindowWidth: 100
-        },
-        key: "AIzaSyBGZVyAXHJwoA4Ea-a3kuD1AsuZwbrnLlM"
-    }
+
+var maps = [].slice.call(document.querySelectorAll(".gv-map"));
+
+maps.forEach(function(m){
+  m.innerHTML += maphtml;
+  setTimeout(function(){m.style.paddingBottom = "0px"})
+ // ;
 })
